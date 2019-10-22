@@ -29,6 +29,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/searchCard"
             app:cardElevation="3dp"
+            android:alpha="0.9"
             style="@style/AppCard">
             <com.simplemobiletools.commons.views.MyEditText
                 android:id="@+id/query"
