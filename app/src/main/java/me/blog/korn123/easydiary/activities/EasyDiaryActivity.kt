@@ -1,15 +1,25 @@
 package me.blog.korn123.easydiary.activities
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.view.ViewGroup
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.simplemobiletools.commons.models.Release
 import io.github.aafactory.commons.activities.BaseSimpleActivity
 import io.github.aafactory.commons.extensions.updateAppViews
 import io.github.aafactory.commons.extensions.updateTextColors
+import me.blog.korn123.commons.utils.EasyDiaryUtils
 import me.blog.korn123.commons.utils.FontUtils
 import me.blog.korn123.easydiary.BuildConfig
 import me.blog.korn123.easydiary.R
 import me.blog.korn123.easydiary.extensions.*
 import me.blog.korn123.easydiary.helper.APP_BACKGROUND_ALPHA
+import me.blog.korn123.easydiary.helper.WORKING_DIRECTORY
 
 /**
  * Created by hanjoong on 2017-05-03.
@@ -43,6 +53,19 @@ open class EasyDiaryActivity : BaseSimpleActivity() {
             updateCardViewPolicy(it)
         }
         FontUtils.setFontsTypeface(applicationContext, assets, null, findViewById<ViewGroup>(android.R.id.content), mCustomLineSpacing)
+
+        val opt = RequestOptions()
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .priority(Priority.HIGH)
+
+        Glide.with(this).asBitmap().load(EasyDiaryUtils.getExternalStorageDirectory().absolutePath + WORKING_DIRECTORY + "01.jpg").apply(opt).into(object : SimpleTarget<Bitmap>() {
+            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                val ob = BitmapDrawable(resources, resource)
+                mRootView?.setBackgroundDrawable(ob)
+            }
+
+        })
     }
 
     override fun getMainViewGroup(): ViewGroup? = mRootView

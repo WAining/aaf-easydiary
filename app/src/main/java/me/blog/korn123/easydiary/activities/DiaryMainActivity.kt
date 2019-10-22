@@ -4,12 +4,9 @@ import android.app.Activity
 import android.content.ActivityNotFoundException
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.os.Handler
 import android.speech.RecognizerIntent
 import android.text.Editable
@@ -20,12 +17,6 @@ import android.widget.AbsListView
 import android.widget.AdapterView
 import android.widget.RelativeLayout
 import androidx.core.app.ActivityCompat
-import com.bumptech.glide.Glide
-import com.bumptech.glide.Priority
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.request.target.SimpleTarget
-import com.bumptech.glide.request.transition.Transition
 import com.github.amlcurran.showcaseview.ShowcaseView
 import com.github.amlcurran.showcaseview.targets.ViewTarget
 import com.github.ksoichiro.android.observablescrollview.ObservableListView
@@ -120,19 +111,6 @@ class DiaryMainActivity : ToolbarControlBaseActivity<ObservableListView>() {
             diaryListView.setSelection(0)
             config.previousActivity = -1
         }
-
-        val opt = RequestOptions()
-                .centerCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .priority(Priority.HIGH)
-
-        Glide.with(this).asBitmap().load(EasyDiaryUtils.getExternalStorageDirectory().absolutePath + WORKING_DIRECTORY + "01.jpg").apply(opt).into(object : SimpleTarget<Bitmap>() {
-            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-                val ob = BitmapDrawable(resources, resource)
-                main_holder.setBackgroundDrawable(ob)
-            }
-
-        })
     }
 
     override fun getLayoutResId(): Int {
